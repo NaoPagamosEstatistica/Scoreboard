@@ -13,21 +13,7 @@ const path = require('path');
 const { Client } = require('pg');
 const production = false;
 
-// PRODUCTION DB
-if (production) {
-  const pgdb = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-  });
-  pgdb.connect();
-  pgdb.query('CREATE TABLE IF NOT EXISTS db(key INTEGER PRIMARY KEY, data JSONB)', (err, res) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Created table');
-    }
-  });
-}
+
 
 const hostname = 'localhost';
 const dbPath = 'database/db.json';
@@ -186,8 +172,6 @@ function getNextId(array) {
 }
 
 function initServer() {
-  loadDatabase();
-  setInterval(() => updateCompetitionsSubmissions(), 5000);
 
   huxleyToken = clientToken = null;
 
